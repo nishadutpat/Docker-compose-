@@ -1,0 +1,32 @@
+version: '3.9'
+
+services:
+  db:
+    image: mysql:latest
+    ports:
+      - "3306:3306" 
+    networks:
+      - mynet
+    volumes:
+      - myvol:/var/lib/mysql 
+    environment:
+      - MYSQL_ROOT_PASSWORD=pass
+      - MYSQL_DATABASE=sample
+
+  web:
+    image: wordpress:latest
+    ports:
+      - "8080:80" 
+    networks:
+      - mynet
+    environment:
+      - WORDPRESS_DB_HOST=db:3306 
+      - WORDPRESS_DB_USER=root
+      - WORDPRESS_DB_PASSWORD=pass
+      - WORDPRESS_DB_NAME=sample
+
+volumes:
+  myvol: 
+
+networks:
+  mynet: 
